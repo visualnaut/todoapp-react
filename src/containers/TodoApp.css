@@ -1,0 +1,167 @@
+body {
+  background: #654ea3;  /* fallback for old browsers */
+  background: -webkit-linear-gradient(to top, #eaafc8, #654ea3);  /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(to top, #eaafc8, #654ea3); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+}
+
+.TodoAppWrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100vh;
+}
+
+.TodoAppContainer {
+  width: 800px;
+  height: 600px;
+  background: white;
+  border-radius: 4px;
+  box-shadow: 0 8px 30px rgba(0,0,0,.085);
+  position: relative;
+}
+
+.TodoSidebarWrapper {
+  width: 30%;
+  float: left;
+  height: 100%;
+  border-radius: 4px 0 0 4px;
+  border-right: thin solid #f5f5f5
+}
+
+.TodoSidebarWrapper .SidebarContainer {
+  padding: 16px;
+  height: 100%;
+  position: relative;
+}
+
+.TodoSidebarWrapper .SidebarContainer .Title {
+  font-size: 24px;
+  margin-bottom: 24px;
+  padding-left:8px;
+  color: rgb(18, 24, 37);
+  font-weight: normal;
+}
+
+.TodoAppWrapper .TodoAppContainer .AddNewBtn {
+  display: block;
+  width: 48px;
+  height: 48px;
+  margin-bottom: 16px;
+  border: none;
+  background: #8E2DE2;  /* fallback for old browsers */
+  background: -webkit-linear-gradient(to top, #4A00E0, #8E2DE2);  /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(to top, #4A00E0, #8E2DE2); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+  border-radius: 50%;
+  box-shadow: 0 6px 16px -6px #4A00E0;
+  font-size: 24px;
+  color: white;
+  font-weight: bold;
+  letter-spacing: .5px;
+  text-shadow: 0 2px 4px rgba(0,0,0,.1);
+  position: absolute;
+  bottom: 0;
+  left: 16px;
+  cursor: pointer;
+}
+
+.TodoAppWrapper .TodoAppContainer .AddNewBtn:active {
+  transform: scale(1.1);
+}
+
+.TodoAppWrapper .TodoAppContainer .AddNewBtn:before,
+.TodoAppWrapper .TodoAppContainer .AddNewBtn:after {
+  content: '';
+  width: 26px;
+  height: 2px;
+  background: white;
+  position: absolute;
+  left:11px;
+  transform: rotate(90deg);
+  border-radius: 2px;
+}
+
+.TodoAppWrapper .TodoAppContainer .AddNewBtn:after {
+  transform: rotate(0deg);
+}
+
+.TodoAppWrapper .TodoAppContainer .AddNewBtn:focus {
+  outline: none;
+}
+
+.TodoSidebarWrapper .SidebarContainer .categoryItem {
+  padding: 12px;
+  color: rgba(0,0,0,.85);
+  margin-bottom: 8px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all .2s;
+  letter-spacing: .25px;
+  font-size: 14px;
+  color: #444;
+  border-left: 4px solid white
+}
+
+.TodoSidebarWrapper .SidebarContainer .categoryItem:not(.active):hover {
+  background: rgba(0,0,0,0.035)
+}
+
+.TodoSidebarWrapper .SidebarContainer .categoryItem.active {
+  transform: scale(1.025);
+  box-shadow: 0 2px 16px -2px rgba(0,0,0,.085);
+  border-color: salmon
+}
+
+.TodoViewerWrapper {
+  width: 69%;
+  float: left;
+  height: 100%;
+}
+
+.TodoViewerWrapper .TodoViewerContainer {
+  padding: 16px;
+  height: 100%;
+}
+
+.TodoViewerWrapper .TodoViewerContainer .Title {
+  font-size: 24px;
+  margin-bottom: 24px;
+  padding-left:8px;
+  color: rgb(21, 26, 36);
+  font-weight: normal;
+  letter-spacing: .5px
+}
+
+.TodoViewerWrapper .TodoViewerContainer .TodoItem {
+  display: flex;
+  align-content: flex-start;
+  margin-bottom: 16px;
+  padding-bottom: 8px;
+  border-bottom: thin dashed #eee;
+  padding-left: 8px;
+  color: #444
+}
+.TodoViewerWrapper .TodoViewerContainer .TodoItem label {
+  width: 24px;
+  height: 24px;
+  background: white;
+  border-radius: 4px;
+  display: block;
+  border: thin solid rgb(112, 47, 216);
+  cursor: pointer
+}
+
+.TodoViewerWrapper .TodoViewerContainer .TodoItem input[type=checkbox] {
+  display: none
+}
+
+.TodoViewerWrapper .TodoViewerContainer .TodoItem input[type=checkbox]:checked + label {
+  background: #f00
+}
+
+.TodoViewerWrapper .TodoViewerContainer .TodoItem p {
+  width: 100%;
+  margin: 0;
+  line-height: 24px;
+  font-size: 14px;
+}
