@@ -10,15 +10,21 @@ class App extends Component {
     categories: [
       {
         id: 0, 
-        categoryTitle: "Personal"
+        categoryTitle: "Personal",
+        isDeleted: false,
+        catColor: "tomato"
       },
       {
         id: 1,
-        categoryTitle: "School"
+        categoryTitle: "School",
+        isDeleted: false,
+        catColor: "seagreen"
       },
       {
         id: 2,
-        categoryTitle: "Project"
+        categoryTitle: "Project",
+        isDeleted: false,
+        catColor: "slateblue"
       }
     ],
     todoItems: [
@@ -26,25 +32,78 @@ class App extends Component {
         id: 0, 
         idCat: 0, 
         todo: "Buy some eggs", 
-        isDone: false
+        isDone: false,
+        isDeleted: false
+      },
+      {
+        id: 1, 
+        idCat: 0, 
+        todo: "Buy some milks", 
+        isDone: false,
+        isDeleted: false
       },
       {
         id: 0,
         idCat: 1,
         todo: "Finish Homework",
-        isDone: false
+        isDone: true,
+        isDeleted: true
+      }, 
+      {
+        id: 1,
+        idCat: 1,
+        todo: "Finish React",
+        isDone: false,
+        isDeleted: false
       }
     ],
-    catActiveId: 0
+    catActiveId: 0,
+    showTrash: false,
+    showDone: false
   }
 
   changeCategoryHandler = (index) => {
     const catActiveNow = index;
     this.setState({
-      catActiveId: catActiveNow
+      catActiveId: catActiveNow,
+      showTrash: false,
+      showDone: false
     })
   }
   
+  setTodoDoneHandler = (id , idCat) => {
+    // Get the clicked todo and current todos
+    const todo = this.state.todoItems.find((todo) => todo.id === id && todo.idCat === idCat)
+    const todos = [...this.state.todoItems]
+
+    // Toggle the selected todo
+    todo.isDone = !todo.isDone
+
+    // Update the todos with edited todo above
+    todos.splice(id, todo)
+
+    console.log(todo)
+    console.log(todos)
+
+    // Set the current state to latest edited todos
+    this.setState(({
+      todoItems: todos
+    }))
+  }
+
+  showTrashHandler = () => {
+    this.setState({
+      showTrash: true,
+      showDone: false
+    })
+  }
+
+  showDoneTodoHandler = () => {
+    this.setState(prevState => ({
+      showDone: !prevState.showDone
+    }))
+  }
+
   render () {
     return (
       <div className="TodoAppWrapper">
@@ -53,16 +112,34 @@ class App extends Component {
             <Sidebar 
               categories={this.state.categories} 
               categoryActive={this.state.catActiveId} 
-              clicked={this.changeCategoryHandler} />
+              clicked={this.changeCategoryHandler}
+              showTrashClicked={this.showTrashHandler}
+              showTrash={this.state.showTrash} />
           </div>
           <div className="TodoViewerWrapper">
             <TodoViewer
               categories={this.state.categories} 
-              categoryActive={this.state.catActiveId} 
-              todoItems={this.state.todoItems} />
+              categoryActive={this.state.catActiveId}
+              todoItems={this.state.todoItems}
+              showTrash={this.state.showTrash}
+              showDone={this.state.showDone}
+              showDoneTodoClicked={this.showDoneTodoHandler}
+              checkboxClicked={this.setTodoDoneHandler} />
           </div>
-          <button className="AddNewBtn"></button>
+          <div className="ActionBtnWrapper">
+            <button className="AddNewBtn"></button>
+            <button className="AddNewBtn"></button>
+          </div>
         </div>
+        <svg xmlns="http://www.w3.org/2000/svg" version="1.1">
+            <defs>
+            <filter id="goo">
+              <feGaussianBlur in="SourceGraphic" stdDeviation="10" result="blur" />
+              <feColorMatrix in="blur" mode="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 18 -7" result="goo" />
+              <feBlend in="SourceGraphic" in2="goo" />
+            </filter>
+            </defs>
+        </svg>
       </div>
     )
   }

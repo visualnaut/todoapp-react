@@ -8,7 +8,10 @@ const Sidebar = props => {
       <Categories 
         categories={props.categories} 
         categoryActive={props.categoryActive}
-        clicked={props.clicked} />
+        clicked={props.clicked}
+        showTrash={props.showTrash} />
+      <a onClick={props.showTrashClicked} 
+        className={props.showTrash ? "TrashBtn active" : "TrashBtn"}>Recently Deleted</a>
     </div>
   )
 }
