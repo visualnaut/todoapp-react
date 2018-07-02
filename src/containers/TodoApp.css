@@ -2,7 +2,6 @@ body {
   background: #7474BF;  /* fallback for old browsers */
   background: -webkit-linear-gradient(to right, #348AC7, #7474BF);  /* Chrome 10-25, Safari 5.1-6 */
   background: linear-gradient(to right, #348AC7, #7474BF); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
-  
 }
 
 .TodoAppWrapper {
@@ -343,15 +342,38 @@ body {
   border-radius: 4px;
   display: block;
   border: thin solid #f2709c;
-  cursor: pointer
+  cursor: pointer;
+  position: relative;
 }
 
 .TodoViewerWrapper .TodoViewerContainer .TodoItem input[type=checkbox] {
   display: none
 }
 
-.TodoViewerWrapper .TodoViewerContainer .TodoItem input[type=checkbox]:checked + label {
-  background: #f2709c
+.TodoViewerWrapper .TodoViewerContainer .TodoItem input[type=checkbox]:checked + label:before,
+.TodoViewerWrapper .TodoViewerContainer .TodoItem input[type=checkbox]:checked + label:after {
+  transition: all .2s;
+  content: '';
+  display: inline-block;
+  width: 20px;
+  height: 4px;
+  background: #f2709c;
+  border-radius: 4px;
+  top: 10px;
+  left: 4px;
+  position: absolute;
+  transform: rotate(-45deg)
+}
+
+.TodoViewerWrapper .TodoViewerContainer .TodoItem label:hover {
+  background: #f2709c33;
+}
+
+.TodoViewerWrapper .TodoViewerContainer .TodoItem input[type=checkbox]:checked + label:after {
+  width: 10px;
+  transform: rotate(45deg);
+  left: 1px;
+  top: 13px
 }
 
 .TodoViewerWrapper .TodoViewerContainer .TodoItem p {
