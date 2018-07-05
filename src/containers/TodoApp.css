@@ -164,6 +164,7 @@ body {
   pointer-events: all;
   border-radius: 4px;
   width: 80%;
+  transition: all .2s
 }
 
 .TodoViewerWrapper .AddTodoFormWrapper .AddTodoFormContainer .AddTodoFormHeader {
@@ -264,7 +265,8 @@ body {
 .TodoViewerWrapper .TodoViewerContainer .DoneTodoContainer {
   padding: 8px;
   background: #f9f9f9;
-  border-radius: 4px
+  border-radius: 4px;
+  margin-top: 16px
 }
 
 .TodoViewerWrapper .TodoViewerContainer .DoneTodoContainer h1 {
@@ -329,18 +331,45 @@ body {
 .TodoViewerWrapper .TodoViewerContainer .TodoItem {
   display: flex;
   align-content: flex-start;
-  margin-bottom: 16px;
-  padding-bottom: 8px;
-  border-bottom: thin dashed #eee;
-  padding-left: 8px;
-  color: #444
+  padding: 8px 16px;
+  color: #444;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all .2s
+}
+
+.TodoViewerWrapper .TodoViewerContainer .TodoItem .checkWrapper {
+  width: 66px;
+  height: 27px;
+  text-align: right
+}
+
+.TodoViewerWrapper .TodoViewerContainer .TodoItem .deleteBtn,
+.TodoViewerWrapper .TodoViewerContainer .TodoItem .putBackBtn {
+  display: inline-block;
+  width: 26px;
+  height: 26px;
+  background: #f5f5f5;
+  margin-left: 4px;
+  border-radius: 4px;
+  vertical-align: top;
+  border: thin solid #f5f5f5
+}
+
+.TodoViewerWrapper .TodoViewerContainer .TodoItem.active {
+  box-shadow: 0 0 16px -2px rgba(0,0,0,.105);
+  transform: scale(1.01);
+}
+
+.TodoViewerWrapper .TodoViewerContainer .TodoItem:not(.active):hover {
+  background: #fafafa
 }
 .TodoViewerWrapper .TodoViewerContainer .TodoItem label {
   width: 24px;
   height: 24px;
   background: white;
   border-radius: 4px;
-  display: block;
+  display: inline-block;
   border: thin solid #f2709c;
   cursor: pointer;
   position: relative;

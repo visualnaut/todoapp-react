@@ -5,7 +5,6 @@ import TodoViewer from '../components/TodoViewer/TodoViewer'
 import AddTodoForm from '../components/Forms/AddTodoForm'
 
 import './TodoApp.css'
-
 class App extends Component {
   state = {
     categories: [
@@ -34,7 +33,7 @@ class App extends Component {
         idCat: 0, 
         todo: "Buy some eggs", 
         isDone: false,
-        isDeleted: false
+        isDeleted: true
       },
       {
         id: 1, 
@@ -47,7 +46,7 @@ class App extends Component {
         id: 0,
         idCat: 1,
         todo: "Finish Homework",
-        isDone: true,
+        isDone: false,
         isDeleted: true
       }, 
       {
@@ -56,9 +55,25 @@ class App extends Component {
         todo: "Finish React",
         isDone: false,
         isDeleted: false
+      },
+      {
+        id: 2,
+        idCat: 1,
+        todo: "Finish React Native",
+        isDone: false,
+        isDeleted: false
+      },
+
+      {
+        id: 3,
+        idCat: 1,
+        todo: "Learn Vue",
+        isDone: false,
+        isDeleted: false
       }
     ],
     catActiveId: 0,
+    todoSelectedId: null,
     isTodoFormOpen: false,
     showTrash: false,
     showDone: false,
@@ -78,7 +93,8 @@ class App extends Component {
 
     // Set the current state to latest edited todos
     this.setState(({
-      todoItems: todos
+      todoItems: todos,
+      todoSelectedId: null
     }))
   }
 
@@ -89,7 +105,8 @@ class App extends Component {
       showTrash: false,
       showDone: false,
       isTodoFormOpen: false,
-      todoTemp: ''
+      todoTemp: '',
+      todoSelectedId: null
     })
   }
 
@@ -98,19 +115,22 @@ class App extends Component {
       showTrash: true,
       showDone: false,
       isTodoFormOpen: false,
-      todoTemp: ''
+      todoTemp: '',
+      todoSelectedId: null
     })
   }
 
   showDoneTodoHandler = () => {
     this.setState(prevState => ({
-      showDone: !prevState.showDone
+      showDone: !prevState.showDone,
+      todoSelectedId: null
     }))
   }
 
   openAddTodoFormHandler = () => {
     this.setState(prevState => ({
       isTodoFormOpen: !prevState.isTodoFormOpen,
+      todoSelectedId: null,
       todoTemp: ''
     }))
   }
@@ -146,6 +166,13 @@ class App extends Component {
     })
   }
 
+  selectTodoHandler = (id) => {
+    // console.log(id)
+    this.setState({
+      todoSelectedId: id
+    })
+  }
+
   render () {
     return (
       <div className="TodoAppWrapper">
@@ -163,14 +190,17 @@ class App extends Component {
               categories={this.state.categories} 
               categoryActive={this.state.catActiveId}
               todoItems={this.state.todoItems}
+              todoSelected={this.state.todoSelectedId}
               showTrash={this.state.showTrash}
               showDone={this.state.showDone}
               showDoneTodoClicked={this.showDoneTodoHandler}
-              checkboxClicked={this.setTodoDoneHandler} />
-            {this.state.isTodoFormOpen ? <AddTodoForm
+              checkboxClicked={this.setTodoDoneHandler}
+              todoClicked={this.selectTodoHandler} />
+            <AddTodoForm
+              isOpen={this.state.isTodoFormOpen}
               onChangeAddTodo={this.addTodoChangeHandler}
               addTodoClicked={this.addTodoHandler}
-              showAddTodoFormClicked={this.openAddTodoFormHandler} /> : null}
+              showAddTodoFormClicked={this.openAddTodoFormHandler} />
           </div>
           <div className="ActionBtnWrapper">
             {this.state.showTrash ? null : <button className="AddNewBtn" onClick={this.openAddTodoFormHandler}></button> }
