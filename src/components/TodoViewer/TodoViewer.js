@@ -29,7 +29,9 @@ const TodoViewer = (props) => {
                   categoryActive={props.categoryActive} 
                   checkboxClicked = {props.checkboxClicked} 
                   todoClicked = {props.todoClicked}
-                  showTrash = {props.showTrash} />
+                  showTrash = {props.showTrash}
+                  deleteClicked= {props.deleteClicked}
+                  putBackClicked = {props.putBackClicked}/>
     </div>
     console.log(doneTodo)
   }
@@ -45,7 +47,9 @@ const TodoViewer = (props) => {
         categoryActive={props.categoryActive}
         checkboxClicked = {props.checkboxClicked}
         todoClicked={props.todoClicked}
-        showTrash = {props.showTrash} />
+        showTrash = {props.showTrash}
+        deleteClicked= {props.deleteClicked}
+        putBackClicked = {props.putBackClicked} />
       {doneTodoContainer}
     </div>
   )

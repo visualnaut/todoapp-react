@@ -28,6 +28,8 @@ const TodoItems = (props) => {
               todoClicked = {props.todoClicked}
               inTrash = {props.showTrash}
               isSelected={props.todoSelected}
+              deleteClicked= {props.deleteClicked}
+              putBackClicked = {props.putBackClicked}
               />)
       }
     )

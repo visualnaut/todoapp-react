@@ -1,4 +1,6 @@
 import React from 'react'
+import trashImg from '../../../../images/trash.svg'
+import putBackImg from '../../../../images/put-back.svg'
 
 const TodoItem = (props) => {
   let todoIdSelector, 
@@ -11,7 +13,7 @@ const TodoItem = (props) => {
   }
   if(props.isSelected === todoIdSelector) {
     classStyle += " active"
-    auxBtn = props.inTrash ? <button className="putBackBtn"></button> : <button className="deleteBtn"></button>
+    auxBtn = props.inTrash ? <button className="putBackBtn" onClick={() => props.putBackClicked(props.id, props.idCat)}><img src={putBackImg} alt=""/></button> : <button className="deleteBtn" onClick={() => props.deleteClicked()}><img src={trashImg} alt=""/></button>
   }
   return(
     <div className={classStyle} >

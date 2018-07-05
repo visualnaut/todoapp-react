@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 
 import Sidebar from '../components/Sidebar/Sidebar'
 import TodoViewer from '../components/TodoViewer/TodoViewer'
-import AddTodoForm from '../components/Forms/AddTodoForm'
+import Modal from '../components/UI/Modal/Modal'
 
 import './TodoApp.css'
 class App extends Component {
@@ -33,7 +33,7 @@ class App extends Component {
         idCat: 0, 
         todo: "Buy some eggs", 
         isDone: false,
-        isDeleted: true
+        isDeleted: false
       },
       {
         id: 1, 
@@ -47,7 +47,7 @@ class App extends Component {
         idCat: 1,
         todo: "Finish Homework",
         isDone: false,
-        isDeleted: true
+        isDeleted: false
       }, 
       {
         id: 1,
@@ -61,7 +61,7 @@ class App extends Component {
         idCat: 1,
         todo: "Finish React Native",
         isDone: false,
-        isDeleted: false
+        isDeleted: true
       },
 
       {
@@ -74,7 +74,10 @@ class App extends Component {
     ],
     catActiveId: 0,
     todoSelectedId: null,
-    isTodoFormOpen: false,
+    isTodoFormActive: false,
+    isDeleteTodoActive: false,
+    isPutBackTodoActive: false,
+    isModalOpen: false,
     showTrash: false,
     showDone: false,
     todoTemp: ''
@@ -104,7 +107,8 @@ class App extends Component {
       catActiveId: catActiveNow,
       showTrash: false,
       showDone: false,
-      isTodoFormOpen: false,
+      isModalOpen: false,
+      // isTodoFormActive: false,
       todoTemp: '',
       todoSelectedId: null
     })
@@ -114,7 +118,8 @@ class App extends Component {
     this.setState({
       showTrash: true,
       showDone: false,
-      isTodoFormOpen: false,
+      isModalOpen: false,
+      // isTodoFormActive: false,
       todoTemp: '',
       todoSelectedId: null
     })
@@ -123,16 +128,34 @@ class App extends Component {
   showDoneTodoHandler = () => {
     this.setState(prevState => ({
       showDone: !prevState.showDone,
-      todoSelectedId: null
+      todoSelectedId: null,
+      isModalOpen: false,
+      // isTodoFormActive: false,
+    }))
+  }
+
+  toggleModal = () => {
+    this.setState(prevState => ({
+      isModalOpen: !prevState.isModalOpen
     }))
   }
 
   openAddTodoFormHandler = () => {
-    this.setState(prevState => ({
-      isTodoFormOpen: !prevState.isTodoFormOpen,
-      todoSelectedId: null,
-      todoTemp: ''
-    }))
+    if(this.state.isDeleteTodoActive || this.state.isPutBackTodoActive) {
+      this.setState({
+        isModalOpen: true,
+        isTodoFormActive: true,
+        isDeleteTodoActive: false,
+        isPutBackTodoActive: false,
+        todoSelectedId: null,
+        todoTemp: ''
+      })
+    } else {
+      this.setState(prevState => ({
+        isModalOpen: !prevState.isModalOpen,
+        isTodoFormActive: true,
+      }))
+    }
   }
 
   addTodoHandler = () => {
@@ -153,7 +176,8 @@ class App extends Component {
       this.setState({
         todoItems: populateTodo,
         todoTemp: '',
-        isTodoFormOpen: false
+        isModalOpen: false,
+        isTodoFormActive: false,
       })
       console.log(populateTodo)
       console.log(possibleTodoId)
@@ -169,8 +193,61 @@ class App extends Component {
   selectTodoHandler = (id) => {
     // console.log(id)
     this.setState({
-      todoSelectedId: id
+      todoSelectedId: id,
+      isModalOpen: false
     })
+  }
+  
+  openDeleteTodoModalHandler = () => {
+    this.setState(prevState => ({
+      isModalOpen: !prevState.isModalOpen,
+      isDeleteTodoActive: true,
+      isPutBackTodoActive: false,
+      isTodoFormActive: false,
+    }))
+  }
+
+
+  deleteTodoHandler = () => {
+    // Get the clicked todo and current todos category
+    const todo = this.state.todoItems.find((todo) => todo.id === this.state.todoSelectedId && todo.idCat === this.state.catActiveId)
+    const todos = [...this.state.todoItems]
+
+    // Toggle the selected todo
+    todo.isDeleted = !todo.isDeleted
+
+    // Update the todos with edited todo above
+    todos.splice(this.state.todoSelectedId, todo)
+
+    // Set the current state to latest edited todos
+    this.setState(({
+      todoItems: todos,
+      isModalOpen: false,
+      todoSelectedId: null
+    }))
+  }
+
+  putbackTodoHandler = (id, idCat) => {
+
+    // Get the clicked todo and current todos category
+    const todo = this.state.todoItems.find((todo) => todo.id === id && todo.idCat === idCat)
+    const todos = [...this.state.todoItems]
+
+    // Toggle the selected todo
+    todo.isDeleted = !todo.isDeleted
+
+    // Update the todos with edited todo above
+    todos.splice(this.state.todoSelectedId, todo)
+
+    // Set the current state to latest edited todos
+    this.setState(prevState => ({
+      todoItems: todos,
+      todoSelectedId: null,
+      isModalOpen: !prevState.isModalOpen,
+      isPutBackTodoActive: true,
+      isDeleteTodoActive: false,
+      isTodoFormActive: false,
+    }))
   }
 
   render () {
@@ -195,12 +272,18 @@ class App extends Component {
               showDone={this.state.showDone}
               showDoneTodoClicked={this.showDoneTodoHandler}
               checkboxClicked={this.setTodoDoneHandler}
-              todoClicked={this.selectTodoHandler} />
-            <AddTodoForm
-              isOpen={this.state.isTodoFormOpen}
+              todoClicked={this.selectTodoHandler}
+              deleteClicked={this.openDeleteTodoModalHandler}
+              putBackClicked = {this.putbackTodoHandler} />
+            <Modal
+              isOpen={this.state.isModalOpen}
+              isTodoFormActive={this.state.isTodoFormActive}
+              isDeleteTodoActive={this.state.isDeleteTodoActive}
+              isPutBackTodoClicked={this.state.isPutBackTodoActive}
               onChangeAddTodo={this.addTodoChangeHandler}
               addTodoClicked={this.addTodoHandler}
-              showAddTodoFormClicked={this.openAddTodoFormHandler} />
+              deleteTodoClicked={this.deleteTodoHandler}
+              toggleModal={this.toggleModal} />
           </div>
           <div className="ActionBtnWrapper">
             {this.state.showTrash ? null : <button className="AddNewBtn" onClick={this.openAddTodoFormHandler}></button> }
