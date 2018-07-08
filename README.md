@@ -6,13 +6,5 @@ To test it, just clone this repo and using terminal run `npm install` then `npm 
 
 ----
 <p align="center">
-  <img src="https://i.imgur.com/u5ZTqoz.png" alt="App Preview" />
-</p>
-
-<p align="center">
-  <img src="https://i.imgur.com/8oweYjz.png" alt="App Preview" />
-</p>
-
-<p align="center">
-  <img src="https://i.imgur.com/fAJ1uV9.png" alt="App Preview" />
+  <img src="https://i.imgur.com/Z8DVbYQ.gifv" alt="App Preview" />
 </p>
