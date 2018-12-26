@@ -67,6 +67,8 @@ background: linear-gradient(to bottom, #8f94fb, #4e54c8); /* W3C, IE 10+/ Edge, 
 }
 .TodoAppWrapper .TodoAppContainer .ActionBtnWrapper {
   filter:url('#goo');
+  position: absolute;
+  bottom: 0;
 }
 
 .TodoAppWrapper .TodoAppContainer .AddNewBtn {
